@@ -17,12 +17,12 @@ let isRandomized = false;
 let numGenerations = 0;
 
 let aliveState = 0;
-let deadState = 1;
+let deadState = .95;
 
 function getState() {
     let probability = Math.random();
     // probability of state being off
-    return (probability > .95 ? aliveState : deadState);
+    return (probability > .5 ? aliveState : deadState);
 }
 
 function getCell(cells, i, j) {
@@ -129,7 +129,8 @@ function updateGrid(shouldSimulate) {
             let cell = getCell(cells, i, j);
             let backBufferCell = getCell(cellsBackBuffer, i, j);
             
-            noStroke();
+            strokeWeight(1);
+            stroke(.5);
             fill(cell.state);
             rect(i * gridScale, j * gridScale, cell.width, cell.height);
 
