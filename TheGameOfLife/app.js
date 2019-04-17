@@ -3,7 +3,7 @@ let cells = [];
 let canvas;
 
 let canvasScalar = .85;
-let gridScale = 10;
+let gridScale = 20;
 
 let gridWidth;
 let gridHeight;
@@ -47,8 +47,8 @@ function createGrid(randomize) {
 
     cells.length = (gridWidth) * (gridHeight);
 
-    for (let j = 0; j < gridHeight; j++) {
-        for (let i = 0; i < gridWidth; i++) {
+    for (let i = 0; i < gridWidth; i++) {
+        for (let j = 0; j < gridHeight; j++) {
             if (randomize) {
                 setCell(cells, i, j, new Cell(gridScale, gridScale, getState()));
             } else {
@@ -67,8 +67,8 @@ function resizeGrid(randomize) {
 
     cells.length = (gridWidth) * (gridHeight);
 
-    for (let j = 0; j < gridHeight; j++) {
-        for (let i = 0; i < gridWidth; i++) {
+    for (let i = 0; i < gridWidth; i++) {
+        for (let j = 0; j < gridHeight; j++) {
             let cell = getCell(cells, i, j);
             if (cell == undefined) {
                 if (randomize) {
@@ -123,8 +123,8 @@ function getNeighbors(cells, i, j) {
 function updateGrid(shouldSimulate) {
     let cellsBackBuffer = cells.map(c => Object.assign({}, c));
 
-    for (let j = 0; j < gridHeight; j++) {
-        for (let i = 0; i < gridWidth; i++) {
+    for (let i = 0; i < gridWidth; i++) {
+        for (let j = 0; j < gridHeight; j++) {
 
             let cell = getCell(cells, i, j);
             let backBufferCell = getCell(cellsBackBuffer, i, j);
@@ -224,5 +224,16 @@ function keyPressed() {
     if (keyCode === UP_ARROW) {
         framesPerSecond++;
         frameRate(framesPerSecond);
+    }
+
+    if (!shouldSimulate) {
+        if (keyCode === RIGHT_ARROW) {
+            gridScale++;
+        }
+        if (keyCode === LEFT_ARROW) {
+            gridScale--;
+        }
+        gridScale = (gridScale < 0 ? 0 : gridScale);
+        resizeGrid(false);
     }
 }
