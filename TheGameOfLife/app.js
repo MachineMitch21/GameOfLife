@@ -151,16 +151,10 @@ function updateGrid(shouldSimulate) {
         ++numGenerations;
 }
 
-function centerCanvas() {
-    let x = (windowWidth - width) * .5;
-    let y = (windowHeight - height) * .5;
-    canvas.position(x, y);
-}
-
 function setup() {
     colorMode(RGB, 1);
     canvas = createCanvas(windowWidth * canvasScalar, windowHeight * canvasScalar);
-    centerCanvas();
+    Utilities.centerCanvas(canvas);
 
     createGrid();
 }
@@ -186,7 +180,7 @@ function draw() {
 
 function windowResized() {
     resizeCanvas(windowWidth * canvasScalar, windowHeight * canvasScalar);
-    centerCanvas();
+    Utilities.centerCanvas(canvas);   
 
     // resizeGrid();
 }
